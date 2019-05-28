@@ -1,24 +1,45 @@
-# flask-psycopg2-starter
+# Rounders
 
-A starter kit including Flask and Psycopg2 without SQLAlchemy
+2019S UBC CPSC304 Project
+
+## Group Members
+
+```txt
+Name           Student No  CS ID  Tutorial  Email
+-------------- ----------- ------ --------- ---------------------------
+...
+```
 
 ## Requirements
 
 - `Python>=3.7.3` [General](https://www.python.org/downloads/release/python-373/)
 - `PostgreSQL>=11.2` [General](https://www.postgresql.org/download/) [macOS](https://postgresapp.com/)
 
+Check via running the following commands in your terminal:
+
+```bash
+$ python3 --version
+Python 3.7.3
+$ psql -U postgres -c "SELECT version();" -tA
+PostgreSQL 11.3 on x86_64-apple-darwin16.7.0, compiled by Apple LLVM version
+8.1.0 (clang-802.0.42), 64-bit
+```
+
 ## Installation
 
 ```bash
-# flask-psycopg2-starter/
+# rounders/
 $ make install
 [...]
+Database Initialized. DB version:
+    PostgreSQL 11.3 on x86_64-apple-darwin16.7.0, compiled by Apple LLVM version
+    8.1.0 (clang-802.0.42), 64-bit
 ```
 
 ## Routes
 
 ```bash
-# flask-psycopg2-starter/
+# rounders/
 $ flask routes
 Endpoint       Methods    Rule
 -------------  ---------  -----------------------
@@ -38,7 +59,7 @@ If you are starting with this boilerplate to build an application for prod deplo
 If you run into permission issues like below,
 
 ```bash
-# flask-psycopg2-starter/
+# rounders/
 $ make install
 virtualenv venv
 make: ./make-venv: Permission denied
