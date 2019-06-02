@@ -11,7 +11,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint": "eslint . --ext .js --ext .jsx --cache || true",
+    "eslint:table": "eslint . --ext .js --ext .jsx --cache --format table || true",
+    "eslint:summary": "eslint . --ext .js --ext .jsx --cache --format ‘node_modules/eslint-friendly-formatter’ || true"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,6 +39,7 @@
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0"
   }
 }
