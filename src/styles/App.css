@@ -31,3 +31,75 @@
     transform: rotate(360deg);
   }
 }
+
+/* ------------------------ NEW CSS SETTINGS ------------------------ */
+
+#wrapper {
+	margin: 0 auto;
+	width: 960px;
+	text-align: left;
+	color: #000;
+	background-color: #fff;
+}
+
+#header {
+  font-family: 'EB Garamond', serif;
+  font-size: 4em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-shadow: 0.07em 0.07em 0 rgba(37, 34, 34, 0.1);
+  color:rgb(66, 65, 65);
+  padding: 30px;
+  text-align: center;
+}
+
+h1 {
+	font-family: 'EB Garamond', serif;
+	font-size: 1.6em;
+	/* font-style: italic; */
+  text-align: center;
+  padding-top: 15px;
+	color: rgb(56, 53, 53);
+}
+
+h2 {
+	font-size: 1.2em;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 200;
+	text-align: left;
+	color: black;
+	padding-top: 10px;
+	text-decoration: none;
+}
+
+a {
+	color: black;
+	padding: 20px;
+	text-decoration: none;
+}
+
+#navigation {
+	background-color: rgb(250, 231, 182);
+	padding-top: 15px;
+	padding-bottom: 15px;
+	text-align: center;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 200;
+	font-size: 1.1em;
+}
+
+#navigation a:link {
+	color: #000;
+	text-decoration: none;
+}
+
+#navigation a:hover{
+  background-color: rgb(255, 248, 242);
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+#newUsers {
+  padding-top: 30px;
+}
+

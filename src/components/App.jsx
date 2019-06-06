@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+// components
+import Header from './header.jsx';
+import HomePage from './homepage.jsx';
+import Articles from './articles.jsx';
+import Write from './write.jsx';
+import Register from './register.jsx';
+import Login from './login.jsx';
+import User from './user.jsx';
+import Admin from './admin.jsx';
+
 class App extends Component {
   state = { users: [] }
 
@@ -29,10 +41,24 @@ class App extends Component {
   render() {
     const { users } = this.state;
     return (
-      <div className="App">
-        <h1>Users</h1>
-        {users.map(user => <div key={user.id}>{user.username}</div>)}
-      </div>
+      // <div className="App">
+      //   <h1>Users</h1>
+      //   {users.map(user => <div key={user.id}>{user.username}</div>)}
+      // </div>
+      <Router>
+        <div classname="App">
+          <div id="wrapper">
+            <Header />
+              <Route exact path='/' component={HomePage} />
+              <Route exact path='/articles' component={Articles} />
+              <Route exact path='/write' component={Write} />
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/user' component={User} />
+              <Route exact path='/analytics' component={Admin} />
+          </div>
+        </div>
+      </Router>
     );
   }
 }
