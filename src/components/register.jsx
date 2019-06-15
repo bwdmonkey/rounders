@@ -5,6 +5,7 @@ class Register extends Component {
     render() {
         return (
             <div className="register">
+                <h1>Register</h1>
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>

@@ -6,6 +6,7 @@ class Login extends Component {
     render() {
         return (
             <div className="login">
+                <h1>Log In</h1>
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email</Form.Label>

@@ -106,3 +106,84 @@ a {
 .m-b-5 {
   margin-bottom: 5px;
 }
+
+table {
+	width: 300px;
+}
+
+td {
+	padding: 10px;
+}
+
+table.sqltabs {
+    width:70%; 
+    margin-left:15%; 
+    margin-right:15%;
+    text-align: center;
+}
+
+.sqltabs tr:nth-child(odd) {
+	background: rgb(255, 241, 242);
+}
+
+.sqltabs tr:nth-child(even) {
+	background: rgb(250, 248, 238);
+}
+
+.register {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.login {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.write {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.home {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.user {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.admin {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.articles {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.articles h3 {
+  font-family: 'Palatino', serif;
+	font-size: 1.6em;
+  text-align: left;
+  padding-top: 15px;
+	color: rgb(56, 53, 53);
+}
+
+.articles h4 {
+  font-family: 'Palatino', serif;
+	font-size: 1.0em;
+	font-style: italic;
+  text-align: left;
+	color: rgb(56, 53, 53);
+}
+
+.articles h5 {
+  font-family: 'Palatino', serif;
+	font-size: 1.15em;
+  text-align: left;
+	color: rgb(56, 53, 53);
+}
