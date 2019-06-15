@@ -101,33 +101,11 @@ a {
 
 #newUsers {
   padding-top: 30px;
+  padding-bottom: 50px;
 }
 
 .m-b-5 {
   margin-bottom: 5px;
-}
-
-table {
-	width: 300px;
-}
-
-td {
-	padding: 10px;
-}
-
-table.sqltabs {
-    width:70%; 
-    margin-left:15%; 
-    margin-right:15%;
-    text-align: center;
-}
-
-.sqltabs tr:nth-child(odd) {
-	background: rgb(255, 241, 242);
-}
-
-.sqltabs tr:nth-child(even) {
-	background: rgb(250, 248, 238);
 }
 
 .register {
@@ -186,4 +164,10 @@ table.sqltabs {
 	font-size: 1.15em;
   text-align: left;
 	color: rgb(56, 53, 53);
+}
+
+#pArticles {
+  padding-left: 50px;
+  padding-right: 50px;
+  background-color: rgb(252, 244, 246);
 }

@@ -35,7 +35,7 @@ class HomePage extends Component {
                     >><a href="register">Register</a>
                 </div>
 
-                <div className="articles">
+                <div className="articles" id="pArticles">
                     <h1>Popular Articles</h1>
                     {this.state.json.map((data, i) => {
                         return (
