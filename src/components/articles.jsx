@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 function getJson() {
     // JSON PARSER
@@ -24,6 +26,17 @@ class Articles extends Component {
         return (
             <div className="articles">
                 <h1>Articles</h1>
+                
+                <div id="articleFilter">
+                        <Form.Group controlId="formarticleFilter">
+                            <Form.Label>Search Title Keywords</Form.Label>
+                            <Form.Control className="m-b-5" type="text" placeholder="Keywords" />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Filter
+                        </Button>
+                </div>
+
                 {this.state.json.map((data, i) => {
                     return (
                     <p key={i}>

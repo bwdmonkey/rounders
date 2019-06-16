@@ -252,3 +252,19 @@ table.userProfile {
 .userProfile tr:nth-child(even) {
   background: rgb(255, 252, 240);
 }
+
+#articleFilter {
+  padding-bottom: 30px;
+}
+
+#articleFilter button{
+  background-color: rgb(247, 224, 230);
+  color: rgb(54, 47, 50);
+  border-color: rgb(247, 224, 230);
+}
+
+#submitButton button{
+  background-color: rgb(247, 224, 230);
+  color: rgb(54, 47, 50);
+  border-color: rgb(247, 224, 230);
+}

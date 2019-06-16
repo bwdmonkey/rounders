@@ -32,9 +32,12 @@ class Register extends Component {
                         <Form.Check type="checkbox" className="text-muted" label="By checking this box, you agree to grade this project with generousity." />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
+                    <div id="submitButton">
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </div>
+                    
                 </Form>
             </div>
         );
