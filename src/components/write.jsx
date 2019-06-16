@@ -6,9 +6,7 @@ class Write extends Component {
     render() {
         return (
             <div className="write">
-                <h1>
-                    Write
-                </h1>
+                <h1>Write</h1>
 
             <Form>
                 <Form.Group controlId="title">

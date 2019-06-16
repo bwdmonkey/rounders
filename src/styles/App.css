@@ -55,8 +55,7 @@
 
 h1 {
 	font-family: 'EB Garamond', serif;
-	font-size: 1.6em;
-	/* font-style: italic; */
+	font-size: 1.8em;
   text-align: center;
   padding-top: 15px;
 	color: rgb(56, 53, 53);
@@ -94,6 +93,7 @@ a {
 }
 
 #navigation a:hover{
+  color: black;
   background-color: rgb(255, 248, 242);
   padding-top: 7px;
   padding-bottom: 7px;
@@ -105,6 +105,10 @@ a {
 }
 
 .m-b-5 {
+  margin-bottom: 5px;
+}
+
+.password {
   margin-bottom: 5px;
 }
 
@@ -170,4 +174,81 @@ a {
   padding-left: 50px;
   padding-right: 50px;
   background-color: rgb(252, 244, 246);
+}
+
+#changeUsername {
+  padding-bottom: 30px;
+}
+
+#changeUsername button{
+  background-color: rgb(247, 224, 230);
+  color: rgb(54, 47, 50);
+  border-color: rgb(247, 224, 230);
+}
+
+#changePassword {
+  padding-bottom: 30px;
+}
+
+#changePassword button{
+  background-color: rgb(247, 224, 230);
+  color: rgb(54, 47, 50);
+  border-color: rgb(247, 224, 230);
+}
+
+#premiumSignUp {
+  padding-bottom: 30px;
+}
+
+#premiumSignUp button{
+  background-color: rgb(247, 224, 230);
+  color: rgb(54, 47, 50);
+  border-color: rgb(247, 224, 230);
+}
+
+#addMoney {
+  padding-bottom: 30px;
+}
+
+#addMoney button{
+  background-color: rgb(247, 224, 230);
+  color: rgb(54, 47, 50);
+  border-color: rgb(247, 224, 230);
+}
+
+.userProfile {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+table.userProfile {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-left:15%;
+  margin-right:15%;
+  background-color: beige;
+}
+
+.userProfile td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 50px;
+  padding-right: 200px;
+  text-align: left;
+}
+
+.userProfile th{
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 100px;
+  padding-right: 50px;
+  text-align: left;
+}
+
+.userProfile tr:nth-child(odd) {
+  background: rgb(255, 241, 242);
+}
+
+.userProfile tr:nth-child(even) {
+  background: rgb(255, 252, 240);
 }
