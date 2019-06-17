@@ -171,3 +171,7 @@ a {
   padding-right: 50px;
   background-color: rgb(252, 244, 246);
 }
+
+.thin-icon {
+  -webkit-text-stroke: 2px white;
+}

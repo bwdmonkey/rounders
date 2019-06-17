@@ -46,7 +46,7 @@ class App extends Component {
       //   {users.map(user => <div key={user.id}>{user.username}</div>)}
       // </div>
       <Router>
-        <div classname="App">
+        <div className="App">
           <div id="wrapper">
             <Header />
               <Route exact path='/' component={HomePage} />

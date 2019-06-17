@@ -4,6 +4,11 @@ import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
+// Bootstrapious theme import for analytics page with no JS (graphs)
+import './vendor/font-awesome/css/font-awesome.min.css';
+import './vendor/bootstrapious/css/fontastic.css';
+import './vendor/bootstrapious/css/style.default.css';
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
