@@ -29,7 +29,7 @@ class User extends Component {
                 <table className="userProfile">
                     {this.state.json.map((data, i) => {
                         return (
-                        <tr key={i}>
+                        <tbody key={i}>
                             <tr>
                                 <th>User ID:</th>
                                 <td>{data.ID}</td>
@@ -50,7 +50,7 @@ class User extends Component {
                                 <th>Password:</th>
                                 <td>{data.Password}</td>
                             </tr>
-                        </tr>
+                        </tbody>
                         )
                     })}
                 </table>
