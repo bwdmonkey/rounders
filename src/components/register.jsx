@@ -15,8 +15,8 @@ class Register extends Component {
 
     handleSubmit = (event) => {
         const form = event.currentTarget;
+        event.preventDefault();
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
         }
         this.setState({ validated: true });
