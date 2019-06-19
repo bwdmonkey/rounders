@@ -37,7 +37,7 @@ class TagSelector extends Component {
 
     render() {
         return (
-            <Form ref='form'>
+            <div>
                 <Form.Group controlId="formTags">
                     <Form.Label>{this.props.label}</Form.Label>
                     <Form.Control type="text" placeholder="My tag" onChange={this.handleTagChange}/>
@@ -46,7 +46,7 @@ class TagSelector extends Component {
                     {this.state.selectedTags.map(t => 
                         <Badge variant='primary' key={this.tagIDs[t]}> {t} </Badge>)}
                 </h6>
-            </Form>
+            </div>
         );
     }
 }
