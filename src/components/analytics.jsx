@@ -7,12 +7,9 @@ class Analytics extends Component {
 
     this.state = {
       data: {
-        new_users_last_week: 0,
-        new_articles_last_week: 0,
-        new_claps_last_week: 0,
-        avg_claps_per_user: 0,
-        avg_claps_per_article: 0,
-        avg_articles_per_user: 0,
+        newUsers: 0,
+        newArticles: 0,
+        newReactions: 0,
         banks: []
       },
       nameCheck: true,
@@ -23,9 +20,9 @@ class Analytics extends Component {
   componentDidMount() {
     // GET /analytics response format
     // {
-    //   new_users_last_week: 1,
-    //   new_articles_last_week: 1,
-    //   new_claps_last_week: 1,
+    //   newUsers: 1,
+    //   newArticles: 1,
+    //   newReactions: 1,
     //   avg_claps_per_user: 1,
     //   avg_claps_per_article: 1,
     //   avg_articles_per_user: 1,
@@ -146,7 +143,7 @@ class Analytics extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New User</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{data.new_users_last_week}</div>
+                    <div className="count-number">{data.newUsers}</div>
                   </div>
                 </div>
               </div>
@@ -156,7 +153,7 @@ class Analytics extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New Articles</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{data.new_articles_last_week}</div>
+                    <div className="count-number">{data.newArticles}</div>
                   </div>
                 </div>
               </div>
@@ -166,39 +163,7 @@ class Analytics extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New Claps</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{data.new_claps_last_week}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col">
-                <div className="wrapper count-title d-flex">
-                  <div className="icon"><i className="icon-bill" /></div>
-                  <div className="name">
-                    <strong className="text-uppercase">Avg Claps / User</strong>
-                    <span>Last 1 Month</span>
-                    <div className="count-number">{data.avg_claps_per_user}</div>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="wrapper count-title d-flex">
-                  <div className="icon"><i className="icon-list" /></div>
-                  <div className="name">
-                    <strong className="text-uppercase">Avg Claps / Article</strong>
-                    <span>Last 1 Month</span>
-                    <div className="count-number">{data.avg_claps_per_article}</div>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="wrapper count-title d-flex">
-                  <div className="icon"><i className="icon-list-1" /></div>
-                  <div className="name">
-                    <strong className="text-uppercase">Avg Articles / User</strong>
-                    <span>Last 1 Month</span>
-                    <div className="count-number">{data.avg_articles_per_user}</div>
+                    <div className="count-number">{data.newReactions}</div>
                   </div>
                 </div>
               </div>

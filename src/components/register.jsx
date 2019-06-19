@@ -27,15 +27,15 @@ class Register extends Component {
             last_name: form.elements.formLastName.value,
             email: form.elements.formEmail.value,
             password: form.elements.formPassword.value,
-            bank_account: {
-                bank_code: form.elements.formInstituteNumber.value,
-                transit_number: form.elements.formTransitNumber.value,
-                account_number: form.elements.formAccountNumber.value
-            },
-            institution: {
-                name: form.elements.formInstituteName.value,
-                bank_code: form.elements.formInstituteNumber.value,
-            }
+            // bank_account: {
+            //     bank_code: form.elements.formInstituteNumber.value,
+            //     transit_number: form.elements.formTransitNumber.value,
+            //     account_number: form.elements.formAccountNumber.value
+            // },
+            // institution: {
+            //     name: form.elements.formInstituteName.value,
+            //     bank_code: form.elements.formInstituteNumber.value,
+            // }
         }
 
         fetch('/users', {
@@ -89,7 +89,7 @@ class Register extends Component {
                         <Form.Label>Password</Form.Label>
                         <Form.Control required type="password" placeholder="Password" />
                     </Form.Group>
-
+                    {/*
                     <Form.Group controlId="formInstituteName">
                         <Form.Label>Bank Account Information</Form.Label>
                         <Form.Control required type="text" placeholder="Institute Name - eg. CIBC" />
@@ -102,7 +102,7 @@ class Register extends Component {
                     </Form.Group>
                     <Form.Group controlId="formAccountNumber">
                         <Form.Control required type="text" placeholder="Account Number - eg. 1234567" />
-                    </Form.Group>
+                    </Form.Group> */}
 
 
                     <Form.Group controlId="formGrading">
