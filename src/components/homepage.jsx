@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class HomePage extends Component {
     constructor(props) {
         super(props)
-        this.state = { 
+        this.state = {
             leaderboard: [
                 { username: 'Aarry',
                   total_claps: 65,
@@ -24,15 +24,15 @@ class HomePage extends Component {
             ],
             popularArticles: [
                 { "ID": "1",
-                  "title": "Dinner In Vanvoucer", 
+                  "title": "Dinner In Vanvoucer",
                   "content": "Today I ate dinner at McDonalds",
                   "created_at": "2019-06-19T15:22:23.931Z",
                   "username":"hary",
                   "first_name":"Hry",
                   "last_name":"Poer"
-                }, 
-                { "ID": "2", 
-                  "title": "Dinner In LA", 
+                },
+                { "ID": "2",
+                  "title": "Dinner In LA",
                   "content": "Second dinner at McDonalds",
                   "created_at": "2019-06-19T15:22:23.931Z",
                   "username":"hary2",
@@ -46,11 +46,11 @@ class HomePage extends Component {
     componentDidMount() {
         fetch('/leaderboard')
             .then(res => res.json())
-            .then(leaderboard => 
+            .then(leaderboard =>
                 this.setState({leaderboard: leaderboard.result }))
             .catch(_ => {});
 
-        fetch('/articles')
+        fetch('/trending')
             .then(res => res.json())
             .then(popularArticles => this.setState({popularArticles: popularArticles.result}))
             .catch(_ => {});
@@ -65,7 +65,7 @@ class HomePage extends Component {
                     <h2>Existing users? Please log in.</h2>
                     >><a href="login">Login</a>
                 </div>
-                
+
                 <div id="newUsers">
                     <h2>New users? Register below.</h2>
                     >><a href="register">Register</a>
