@@ -42,6 +42,7 @@ class Articles extends Component {
                     </Form>
                 </div>
 
+            {/* TODO: if state.articles is empty, then display "sorry no articles found"*/}
                 {this.state.json.map((data, i) => {
                     return (
                     <div key={i}>
