@@ -15,6 +15,8 @@ class Admin extends Component {
         avg_articles_per_user: 0,
         banks: []
       },
+      nameCheck: true,
+      codeCheck: true
     };
   }
 
@@ -53,11 +55,25 @@ class Admin extends Component {
 
   generateBankCards = (banks) => {
     const bankCards = [];
-    banks.forEach(bank => {
+    banks.forEach((bank, i) => {
+      let cardContent = [];
+      if (bank.bank_code !== undefined) {
+        cardContent.push(
+          <h6 className="text-primary"
+              key={"bankcode" + i}>{bank.bank_code}</h6>
+        )
+      }
+      if (bank.name !== undefined) {
+        cardContent.push(
+          <h3 className="text-primary"
+              key={"bank"+i}>{bank.name.toUpperCase()}</h3>
+          )
+      }
+
       bankCards.push(
-        <div className="col-md-4" key={bank}>
+        <div className="col-md-4" key={bank + i}>
           <div className="card income text-center">
-            <h3 className="text-primary">{bank.toUpperCase()}</h3>
+            {cardContent}
           </div>
         </div>
       )
@@ -71,6 +87,44 @@ class Admin extends Component {
       section.push(<Row key={"bankrow" + i}>{row}</Row>);
     }
     return section;
+  }
+
+  handleBankOptions = (event) => {
+    if (event.target.id === "codeCheck") {
+      this.setState(
+        { codeCheck: event.target.checked },
+        () => this.updateBanks()
+      )
+    }
+    if (event.target.id === "nameCheck") {
+      this.setState(
+        { nameCheck: event.target.checked },
+        () => this.updateBanks()
+      )
+    }
+  }
+
+  updateBanks = () => {
+    const { nameCheck, codeCheck } = this.state;
+
+    let query = '';
+    if (nameCheck && codeCheck) {
+      query = '?include=bank_code&include=name';
+    } else if (nameCheck) {
+      query = '?include=name'
+    } else if (codeCheck) {
+      query = '?include=bank_code'
+    }
+
+    fetch('/institutions'+query)
+      .then(res => res.json())
+      .then(data => this.setState(prev => ({
+        data: {
+          ...prev.data,           // Maintain old analytics data
+          banks: data.result      // Set new bank data
+        }
+      })))
+      .catch(_ => {});
   }
 
   render() {
@@ -154,6 +208,12 @@ class Admin extends Component {
         {/* Registered Bank Names */}
         <section>
           <h1>Registered Banks</h1>
+          <div>
+            <input id="nameCheck" type="checkbox" onChange={this.handleBankOptions.bind(this)} defaultChecked/> Institute Name<br/>
+            <input id="codeCheck" type="checkbox" onChange={this.handleBankOptions.bind(this)} defaultChecked/> Bank Code<br/>
+            <small>Note: Selecting nothing will also return both fields.</small>
+          </div>
+          <br/>
           {this.generateBankCards(data.banks)}
         </section>
       </div>
