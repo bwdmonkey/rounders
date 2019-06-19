@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Badge from 'react-bootstrap/Badge';
+
+import TagSelector from './tagselector.jsx'
 
 class Write extends Component {
     // probably don't need a constructor here??? 
@@ -11,23 +12,8 @@ class Write extends Component {
         this.state = {
             tags: [],
         }
-
-        this.validTags = [];
-        this.tagIDs= {};
-        
-        // fetch('/tags')
-        //     .then(res => res.json())
-        //     .then(handleTagData)
-        //     .catch(err => console.log("something bad happened", err));
-        let fakeTagData = [ {"id": 1, "label": "bananas"}, 
-                {"id": 2, "label": "apples"},
-                {"id": 3, "label": "mouse"}];
-        this.handleTagData(fakeTagData);
-    }
-
-    handleTagData = (tagData) => {
-        this.validTags = tagData.map(e => e["label"]);
-        tagData.forEach(e => this.tagIDs[e["label"]] = e["id"]);
+        // bite me
+        this.tagSelector = React.createRef();
     }
 
     handleSubmit = (event) => {
@@ -39,7 +25,7 @@ class Write extends Component {
             title: form.elements.formTitle.value,
             content: form.elements.formContent.value,
             // this should be a list of strings
-            tags: this.state.tags,
+            tags: this.tagSelector.current.state.selectedTags,
         }
 
         console.log(JSON.stringify(data));
@@ -54,22 +40,12 @@ class Write extends Component {
         .catch(err => console.log("something bad happened", err));
     }
 
-    handleTagChange = (event) => {
-        //alert(event.target.value);
-        // let validTags = this.state.validTags;
-        let validTags = [ "bananas", "apples", "mouse" ];
-        let tagList = event.target.value.split(',').map(w=>w.trim());
-        tagList = tagList.filter((w,i)=>validTags.indexOf(w) > -1 && tagList.indexOf(w) === i);
-
-        this.setState( { tags: tagList });
-    }
-
     render() {
         return (
             <div className="write">
                 <h1>Write an Article</h1>
 
-                <Form onSubmit={e => this.handleSubmit(e)} >
+                <Form ref='form' onSubmit={e => this.handleSubmit(e)} >
                     <Form.Group controlId="formTitle">
                         <Form.Label>Article Title</Form.Label>
                         <Form.Control type="text" placeholder="My Article!!"/>
@@ -80,21 +56,12 @@ class Write extends Component {
                         <Form.Control as="textarea" rows="8" placeholder="Today, I..."/>
                     </Form.Group>
 
-            {/* TODO: make sure this is a valid set of tags*/}
-                    <Form.Group controlId="formTags">
-                        <Form.Label>Add one of our tags to your article</Form.Label>
-                        <Form.Control type="text" placeholder="My tag" onChange={this.handleTagChange}/>
-                    </Form.Group>
-            <h6>
-            <div>
-                {this.state.tags.map(t => <Badge variant='primary'> {t} </Badge>)}
-            </div>
-            </h6>
-                <div id="submitButton">
-                    <Button variant="primary" type="submit">Submit</Button>
-                </div>
-            </Form>
+                    <TagSelector label="Add one of our tags to your article" ref={this.tagSelector}/>
 
+                    <div id="submitButton">
+                        <Button variant="primary" type="submit">Submit</Button>
+                    </div>
+                </Form>
             </div>
         );
     }
