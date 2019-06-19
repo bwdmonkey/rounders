@@ -77,9 +77,6 @@ class User extends Component {
 
         fetch('/articles/' + article_id, {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
         }).then(
             window.location.reload()
         ).catch(err => console.log("err", err));
@@ -128,18 +125,16 @@ class User extends Component {
                 <table className="userArticles">
                     <tbody>
                         <tr>
-                            <th>Your Articles: (Article ID and Article Title)</th>
+                            <th colSpan={2}>Your Articles: (Article ID and Article Title)</th>
                         </tr>
-                        <tr>
-                            {this.state.userArticles.map(function(article, i){
-                                return (
-                                    <div key={i}>
-                                        <td>{article.id}</td>
-                                        <td>{article.title}</td>
-                                    </div>
-                                )
-                            })}
-                        </tr>
+                        {userArticles.map(function(article, i){
+                            return (
+                                <tr key={i}>
+                                    <td>{article.id}</td>
+                                    <td>{article.title}</td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
 
