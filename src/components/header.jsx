@@ -10,13 +10,13 @@ class Header extends Component {
                 </div>
 
                 <div id="navigation">
-                    <a href="/">Home</a>| 
+                    <a href="/">Home</a>|
                     <a href="articles">Articles</a>|
-                    <a href="write">Write</a>|   
+                    <a href="write">Write</a>|
                     <a href="register">Register</a>|
                     <a href="login">Login</a>|
                     <a href="user">User</a>|
-                    <a href="analytics">Admin</a>
+                    <a href="analytics">Analytics</a>
                 </div>
 
             </header>

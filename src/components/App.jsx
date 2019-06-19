@@ -11,7 +11,7 @@ import Write from './write.jsx';
 import Register from './register.jsx';
 import Login from './login.jsx';
 import User from './user.jsx';
-import Admin from './admin.jsx';
+import Analytics from './analytics.jsx';
 
 class App extends Component {
   state = { users: [] }
@@ -55,7 +55,7 @@ class App extends Component {
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/user' component={User} />
-              <Route exact path='/analytics' component={Admin} />
+              <Route exact path='/analytics' component={Analytics} />
           </div>
         </div>
       </Router>

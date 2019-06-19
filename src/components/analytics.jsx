@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Row from 'react-bootstrap/Row';
 
-class Admin extends Component {
+class Analytics extends Component {
   constructor(props) {
     super(props);
 
@@ -133,7 +133,7 @@ class Admin extends Component {
     return (
       <div className="admin">
         <h1>
-          Admin Analytics
+          Analytics
         </h1>
 
         {/* Counts Section */}
@@ -221,4 +221,4 @@ class Admin extends Component {
   }
 }
 
-export default Admin;
+export default Analytics;
