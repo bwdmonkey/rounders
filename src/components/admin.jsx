@@ -7,12 +7,12 @@ class Admin extends Component {
 
     this.state = {
       data: {
-        newUsersLastWeek: 0,
-        newArticlesLastWeek: 0,
-        newClapsLastWeek: 0,
-        avgClapsPerUser: 0,
-        avgClapsPerArticle: 0,
-        avgArticlesPerUser: 0,
+        new_users_last_week: 0,
+        new_articles_last_week: 0,
+        new_claps_last_week: 0,
+        avg_claps_per_user: 0,
+        avg_claps_per_article: 0,
+        avg_articles_per_user: 0,
         banks: []
       },
     };
@@ -21,18 +21,18 @@ class Admin extends Component {
   componentDidMount() {
     // GET /analytics response format
     // {
-    //   newUsersLastWeek: 1,
-    //   newArticlesLastWeek: 1,
-    //   newClapsLastWeek: 1,
-    //   avgClapsPerUser: 1,
-    //   avgClapsPerArticle: 1,
-    //   avgArticlesPerUser: 1,
+    //   new_users_last_week: 1,
+    //   new_articles_last_week: 1,
+    //   new_claps_last_week: 1,
+    //   avg_claps_per_user: 1,
+    //   avg_claps_per_article: 1,
+    //   avg_articles_per_user: 1,
     // }
     fetch('/analytics')
       .then(res => res.json())
       .then(data => this.setState(prev => ({
         data: {
-          ...data,                // Set new analytics data
+          ...data.result,         // Set new analytics data
           banks: prev.data.banks  // Maintain old bank data
         }
       })))
@@ -45,7 +45,7 @@ class Admin extends Component {
       .then(data => this.setState(prev => ({
         data: {
           ...prev.data,           // Maintain old analytics data
-          banks: data             // Set new bank data
+          banks: data.result      // Set new bank data
         }
       })))
       .catch(_ => {});
@@ -92,7 +92,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New User</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{data.newUsersLastWeek}</div>
+                    <div className="count-number">{data.new_users_last_week}</div>
                   </div>
                 </div>
               </div>
@@ -102,7 +102,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New Articles</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{data.newArticlesLastWeek}</div>
+                    <div className="count-number">{data.new_articles_last_week}</div>
                   </div>
                 </div>
               </div>
@@ -112,7 +112,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New Claps</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{data.newClapsLastWeek}</div>
+                    <div className="count-number">{data.new_claps_last_week}</div>
                   </div>
                 </div>
               </div>
@@ -124,7 +124,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">Avg Claps / User</strong>
                     <span>Last 1 Month</span>
-                    <div className="count-number">{data.avgClapsPerUser}</div>
+                    <div className="count-number">{data.avg_claps_per_user}</div>
                   </div>
                 </div>
               </div>
@@ -134,7 +134,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">Avg Claps / Article</strong>
                     <span>Last 1 Month</span>
-                    <div className="count-number">{data.avgClapsPerArticle}</div>
+                    <div className="count-number">{data.avg_claps_per_article}</div>
                   </div>
                 </div>
               </div>
@@ -144,7 +144,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">Avg Articles / User</strong>
                     <span>Last 1 Month</span>
-                    <div className="count-number">{data.avgArticlesPerUser}</div>
+                    <div className="count-number">{data.avg_articles_per_user}</div>
                   </div>
                 </div>
               </div>
