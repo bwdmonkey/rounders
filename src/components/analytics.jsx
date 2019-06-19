@@ -1,38 +1,37 @@
 import React, { Component } from 'react';
 import Row from 'react-bootstrap/Row';
 
-class Admin extends Component {
+class Analytics extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       data: {
-        newUsersLastWeek: 0,
-        newArticlesLastWeek: 0,
-        newClapsLastWeek: 0,
-        avgClapsPerUser: 0,
-        avgClapsPerArticle: 0,
-        avgArticlesPerUser: 0,
+        newUsers: 0,
+        newArticles: 0,
+        newReactions: 0,
         banks: []
       },
+      nameCheck: true,
+      codeCheck: true
     };
   }
 
   componentDidMount() {
     // GET /analytics response format
     // {
-    //   newUsersLastWeek: 1,
-    //   newArticlesLastWeek: 1,
-    //   newClapsLastWeek: 1,
-    //   avgClapsPerUser: 1,
-    //   avgClapsPerArticle: 1,
-    //   avgArticlesPerUser: 1,
+    //   newUsers: 1,
+    //   newArticles: 1,
+    //   newReactions: 1,
+    //   avg_claps_per_user: 1,
+    //   avg_claps_per_article: 1,
+    //   avg_articles_per_user: 1,
     // }
     fetch('/analytics')
       .then(res => res.json())
       .then(data => this.setState(prev => ({
         data: {
-          ...data,                // Set new analytics data
+          ...data.result,         // Set new analytics data
           banks: prev.data.banks  // Maintain old bank data
         }
       })))
@@ -45,7 +44,7 @@ class Admin extends Component {
       .then(data => this.setState(prev => ({
         data: {
           ...prev.data,           // Maintain old analytics data
-          banks: data             // Set new bank data
+          banks: data.result      // Set new bank data
         }
       })))
       .catch(_ => {});
@@ -53,11 +52,25 @@ class Admin extends Component {
 
   generateBankCards = (banks) => {
     const bankCards = [];
-    banks.forEach(bank => {
+    banks.forEach((bank, i) => {
+      let cardContent = [];
+      if (bank.bank_code !== undefined) {
+        cardContent.push(
+          <h6 className="text-primary"
+              key={"bankcode" + i}>{bank.bank_code}</h6>
+        )
+      }
+      if (bank.name !== undefined) {
+        cardContent.push(
+          <h3 className="text-primary"
+              key={"bank"+i}>{bank.name.toUpperCase()}</h3>
+          )
+      }
+
       bankCards.push(
-        <div className="col-md-4" key={bank}>
+        <div className="col-md-4" key={bank + i}>
           <div className="card income text-center">
-            <h3 className="text-primary">{bank.toUpperCase()}</h3>
+            {cardContent}
           </div>
         </div>
       )
@@ -73,13 +86,51 @@ class Admin extends Component {
     return section;
   }
 
+  handleBankOptions = (event) => {
+    if (event.target.id === "codeCheck") {
+      this.setState(
+        { codeCheck: event.target.checked },
+        () => this.updateBanks()
+      )
+    }
+    if (event.target.id === "nameCheck") {
+      this.setState(
+        { nameCheck: event.target.checked },
+        () => this.updateBanks()
+      )
+    }
+  }
+
+  updateBanks = () => {
+    const { nameCheck, codeCheck } = this.state;
+
+    let query = '';
+    if (nameCheck && codeCheck) {
+      query = '?include=bank_code&include=name';
+    } else if (nameCheck) {
+      query = '?include=name'
+    } else if (codeCheck) {
+      query = '?include=bank_code'
+    }
+
+    fetch('/institutions'+query)
+      .then(res => res.json())
+      .then(data => this.setState(prev => ({
+        data: {
+          ...prev.data,           // Maintain old analytics data
+          banks: data.result      // Set new bank data
+        }
+      })))
+      .catch(_ => {});
+  }
+
   render() {
     const { data } = this.state;
 
     return (
       <div className="admin">
         <h1>
-          Admin Analytics
+          Analytics
         </h1>
 
         {/* Counts Section */}
@@ -92,7 +143,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New User</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{data.newUsersLastWeek}</div>
+                    <div className="count-number">{data.newUsers}</div>
                   </div>
                 </div>
               </div>
@@ -102,7 +153,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New Articles</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{data.newArticlesLastWeek}</div>
+                    <div className="count-number">{data.newArticles}</div>
                   </div>
                 </div>
               </div>
@@ -112,39 +163,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New Claps</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{data.newClapsLastWeek}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col">
-                <div className="wrapper count-title d-flex">
-                  <div className="icon"><i className="icon-bill" /></div>
-                  <div className="name">
-                    <strong className="text-uppercase">Avg Claps / User</strong>
-                    <span>Last 1 Month</span>
-                    <div className="count-number">{data.avgClapsPerUser}</div>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="wrapper count-title d-flex">
-                  <div className="icon"><i className="icon-list" /></div>
-                  <div className="name">
-                    <strong className="text-uppercase">Avg Claps / Article</strong>
-                    <span>Last 1 Month</span>
-                    <div className="count-number">{data.avgClapsPerArticle}</div>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className="wrapper count-title d-flex">
-                  <div className="icon"><i className="icon-list-1" /></div>
-                  <div className="name">
-                    <strong className="text-uppercase">Avg Articles / User</strong>
-                    <span>Last 1 Month</span>
-                    <div className="count-number">{data.avgArticlesPerUser}</div>
+                    <div className="count-number">{data.newReactions}</div>
                   </div>
                 </div>
               </div>
@@ -154,6 +173,12 @@ class Admin extends Component {
         {/* Registered Bank Names */}
         <section>
           <h1>Registered Banks</h1>
+          <div>
+            <input id="nameCheck" type="checkbox" onChange={this.handleBankOptions.bind(this)} defaultChecked/> Institute Name<br/>
+            <input id="codeCheck" type="checkbox" onChange={this.handleBankOptions.bind(this)} defaultChecked/> Bank Code<br/>
+            <small>Note: Selecting nothing will also return both fields.</small>
+          </div>
+          <br/>
           {this.generateBankCards(data.banks)}
         </section>
       </div>
@@ -161,4 +186,4 @@ class Admin extends Component {
   }
 }
 
-export default Admin;
+export default Analytics;

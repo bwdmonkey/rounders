@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import  { Redirect } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -10,7 +11,15 @@ function getJson() {
 class User extends Component {
     constructor(props) {
         super(props)
-        this.state = { json: [] }
+        let doRedirect = false;
+        if (localStorage.getItem('user_id') == null) {
+            doRedirect = true;
+        }
+        this.state = {
+            json: [],
+            user_id: localStorage.getItem('user_id'),
+            redirect: doRedirect,
+        }
     }
 
     componentDidMount() {
@@ -22,6 +31,12 @@ class User extends Component {
     }
 
     render() {
+        const { redirect } = this.state;
+
+        if (redirect) {
+            return <Redirect to='/login' />;
+        }
+
         return (
             <div className="user">
                 <h1>User</h1>
