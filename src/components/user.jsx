@@ -3,11 +3,6 @@ import  { Redirect } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function getJson() {
-    // JSON PARSER FOR ONE TUPLE ONLY
-    return [{ "ID": "1", "Premium_User": "No","Username": "Smoothief", "Balance": "2.60", "Password": "Dinner"}];
-}
-
 class User extends Component {
     constructor(props) {
         super(props)
@@ -18,19 +13,101 @@ class User extends Component {
         this.state = {
             json: [],
             user_id: localStorage.getItem('user_id'),
+            userInfo: {
+                ID: 1,
+                Username: 'Smoothief',
+                last_name: 'Smith',
+                first_name: 'Divia',
+                Email: 'diviasm@outlook.com',
+            },
+            userArticles: [
+                { ID: 10,
+                  Title: 'Dinner'
+                },
+                { ID: 21,
+                  Title: 'Brunch',
+                },
+                { ID: 33,
+                  Title: 'Halo',
+                }
+            ],
             redirect: doRedirect,
+            validatedInfo: false,
+            validatedArticle: false,
         }
     }
 
     componentDidMount() {
-        this.setState((prevState) => {
-            return {
-                json: getJson()
-            }
+        fetch('/users')
+            .then(res => res.json())
+            .then(userInfo =>
+                this.setState({userInfo: userInfo.result }))
+            .catch(_ => {});
+
+        fetch('/articles')
+            .then(res => res.json())
+            .then(userArticles => this.setState({userArticles: userArticles.result}))
+            .catch(_ => {});
+    }
+
+    // UPDATE - PATCH /users/:id (User password update)
+    handlePasswordChange = (event) => {
+        const form = event.currentTarget;
+        event.preventDefault();
+        if (form.checkValidity() === false) {
+            event.stopPropagation();
+        }
+        this.setState({ validatedInfo: true });
+
+        let data = {
+            username: form.elements.formUserID.value,
+            firstName: form.elements.formNewPassword.value,
+        }
+
+        fetch('/users', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
         })
+        .catch(err => console.log("err", err));
+    }
+
+    // DELETE - DELETE /articles/:id (Article delete cascade delete reactions)
+    handleArticleDelete = (event) => {
+        const form = event.currentTarget;
+        event.preventDefault();
+        if (form.checkValidity() === false) {
+            event.stopPropagation();
+        }
+        this.setState({ validatedArticle: true });
+
+        let data = {
+            article_id: form.elements.formDeleteArticleID.value,
+        }
+
+        fetch('/articles', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        })
+        .then( // fetch articles again after deletion
+            fetch('/articles')
+            .then(res => res.json())
+            .then(userArticles => this.setState({userArticles: userArticles.result}))
+            .catch(_ => {})
+        )
+        .catch(err => console.log("err", err));
     }
 
     render() {
+        const { userInfo } = this.state;
+        // const { userArticles } = this.state;
+        const { validatedInfo } = this.state;
+        const { validatedArticle } = this.state;
         const { redirect } = this.state;
 
         if (redirect) {
@@ -42,75 +119,77 @@ class User extends Component {
                 <h1>User</h1>
 
                 <table className="userProfile">
-                    {this.state.json.map((data, i) => {
-                        return (
-                        <tbody key={i}>
+                    <tbody>
                             <tr>
                                 <th>User ID:</th>
-                                <td>{data.ID}</td>
+                                <td>{userInfo.ID}</td>
                             </tr>
                             <tr>
                                 <th>Username:</th>
-                                <td>{data.Username}</td>
+                                <td>{userInfo.Username}</td>
                             </tr>
                             <tr>
-                                <th>Premium User:</th>
-                                <td>{data.Premium_User}</td>
+                                <th>Last Name:</th>
+                                <td>{userInfo.last_name}</td>
                             </tr>
                             <tr>
-                                <th>Account Balance:</th>
-                                <td>{data.Balance}</td>
+                                <th>First Name:</th>
+                                <td>{userInfo.first_name}</td>
                             </tr>
                             <tr>
-                                <th>Password:</th>
-                                <td>{data.Password}</td>
+                                <th>Email:</th>
+                                <td>{userInfo.Email}</td>
                             </tr>
-                        </tbody>
-                        )
-                    })}
+                    </tbody>
+                </table>
+
+                <table className="userArticles">
+                    <tbody>
+                        <tr>
+                            <th>Your Articles: (Article ID and Article Title)</th>
+                        </tr>
+                        <tr>
+                            {this.state.userArticles.map(function(article, i){
+                                return (
+                                    <div key={i}>
+                                        <td>{article.ID}</td>
+                                        <td>{article.Title}</td>
+                                    </div>
+                                )
+                            })}
+                        </tr>
+                    </tbody>
                 </table>
 
                 <hr></hr>
 
-                <Form>
-                    <div id="changeUsername">
-                        <Form.Group controlId="formChangeUsername">
-                            <Form.Label>Change Your Username</Form.Label>
-                            <Form.Control type="text" placeholder="New Username" />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            Update Username
-                        </Button>
-                    </div>
-
+                <Form noValidate validated={validatedInfo} onSubmit={e => this.handlePasswordChange(e)}>
                     <div id="changePassword">
-                        <Form.Group controlId="formChangePassword">
+                        <Form.Group controlId="formUserID">
                             <Form.Label>Change Your Password</Form.Label>
-                            <Form.Control className="password" type="password" placeholder="Old Password" />
+                            <Form.Control className="password" type="text" placeholder="User ID" />
+                        </Form.Group>
+
+                        <Form.Group controlId="formNewPassword">
                             <Form.Control type="password" placeholder="New Password" />
                         </Form.Group>
+
                         <Button variant="primary" type="submit">
                             Update Password
                         </Button>
                     </div>
+                </Form>
 
-                    <div id="premiumSignUp">
-                        <h2>Not A Premium User? Sign Up in One Click!</h2>
-                        <Button variant="primary" type="submit">
-                            Premium Sign Up!
-                        </Button>
-                    </div>
-
-                    <div id="addMoney">
-                        <Form.Group controlId="formAddMoney">
-                            <Form.Label>Add Money to Your Account</Form.Label>
-                            <Form.Control className="m-b-5" type="text" placeholder="Amount" />
+                <Form noValidate validated={validatedArticle} onSubmit={e => this.handleArticleDelete(e)}>
+                    <div id="deleteArticle">
+                        <Form.Group controlId="formDeleteArticleID">
+                            <Form.Label>Delete The Article You Wrote By Entering The Article ID:</Form.Label>
+                            <Form.Control className="m-b-5" type="text" placeholder="Article ID"/>
                         </Form.Group>
                         <Button variant="primary" type="submit">
-                            Add Amount
+                            Delete
                         </Button>
                     </div>
-
                 </Form>
             </div>
         );

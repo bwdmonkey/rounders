@@ -171,6 +171,13 @@ a {
 }
 
 #pArticles {
+  margin-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  background-color: rgb(252, 249, 244);
+}
+
+#leaderBoard {
   padding-left: 50px;
   padding-right: 50px;
   background-color: rgb(252, 244, 246);
@@ -178,16 +185,6 @@ a {
 
 .thin-icon {
   -webkit-text-stroke: 2px white;
-}
-
-#changeUsername {
-  padding-bottom: 30px;
-}
-
-#changeUsername button{
-  background-color: rgb(247, 224, 230);
-  color: rgb(54, 47, 50);
-  border-color: rgb(247, 224, 230);
 }
 
 #changePassword {
@@ -200,21 +197,11 @@ a {
   border-color: rgb(247, 224, 230);
 }
 
-#premiumSignUp {
+#deleteArticle {
   padding-bottom: 30px;
 }
 
-#premiumSignUp button{
-  background-color: rgb(247, 224, 230);
-  color: rgb(54, 47, 50);
-  border-color: rgb(247, 224, 230);
-}
-
-#addMoney {
-  padding-bottom: 30px;
-}
-
-#addMoney button{
+#deleteArticle button{
   background-color: rgb(247, 224, 230);
   color: rgb(54, 47, 50);
   border-color: rgb(247, 224, 230);
@@ -254,6 +241,44 @@ table.userProfile {
 }
 
 .userProfile tr:nth-child(even) {
+  background: rgb(255, 252, 240);
+}
+
+.userArticles {
+  margin-top: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+table.userArticles {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-left:15%;
+  margin-right:15%;
+  background-color: beige;
+}
+
+.userArticles td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 120px;
+  padding-right: 200px;
+  text-align: left;
+}
+
+.userArticles th{
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 100px;
+  padding-right: 50px;
+  text-align: left;
+}
+
+.userArticles tr:nth-child(odd) {
+  background: rgb(255, 241, 242);
+}
+
+.userArticles tr:nth-child(even) {
   background: rgb(255, 252, 240);
 }
 

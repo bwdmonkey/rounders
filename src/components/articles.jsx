@@ -46,7 +46,6 @@ class Articles extends Component {
                 {this.state.json.map((data, i) => {
                     return (
                     <div key={i}>
-                        {/* <td>{data.ID}</td> */}
                         <h3>{data.title}</h3>
                         <h4>By {data.username} -- {data.created_at}</h4>
                         <h5>{data.content}</h5>
