@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import  { Redirect } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -7,6 +8,7 @@ class Login extends Component {
         super(props)
         this.state = {
             validated: false,
+            redirect: false,
         }
     }
 
@@ -19,10 +21,14 @@ class Login extends Component {
         this.setState({ validated: true });
 
         localStorage.setItem('user_id', form.elements.formId.value)
+        this.setState({ redirect: true });
     }
 
     render() {
-        const { validated } = this.state;
+        const { validated, redirect } = this.state;
+        if (redirect) {
+            return <Redirect to='/user' />;
+        }
 
         return (
             <div className="login">
