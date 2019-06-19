@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
+import  { Redirect } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 class User extends Component {
     constructor(props) {
         super(props)
-
-        this.state = { 
+        let doRedirect = false;
+        if (localStorage.getItem('user_id') == null) {
+            doRedirect = true;
+        }
+        this.state = {
+            json: [],
+            user_id: localStorage.getItem('user_id'),
             userInfo: {
-                ID: 1, 
-                Username: 'Smoothief', 
-                last_name: 'Smith', 
-                first_name: 'Divia', 
+                ID: 1,
+                Username: 'Smoothief',
+                last_name: 'Smith',
+                first_name: 'Divia',
                 Email: 'diviasm@outlook.com',
             },
             userArticles: [
@@ -25,15 +31,16 @@ class User extends Component {
                   Title: 'Halo',
                 }
             ],
+            redirect: doRedirect,
             validatedInfo: false,
             validatedArticle: false,
-        };
+        }
     }
 
     componentDidMount() {
         fetch('/users')
             .then(res => res.json())
-            .then(userInfo => 
+            .then(userInfo =>
                 this.setState({userInfo: userInfo.result }))
             .catch(_ => {});
 
@@ -101,6 +108,11 @@ class User extends Component {
         // const { userArticles } = this.state;
         const { validatedInfo } = this.state;
         const { validatedArticle } = this.state;
+        const { redirect } = this.state;
+
+        if (redirect) {
+            return <Redirect to='/login' />;
+        }
 
         return (
             <div className="user">
@@ -136,7 +148,7 @@ class User extends Component {
                         <tr>
                             <th>Your Articles: (Article ID and Article Title)</th>
                         </tr>
-                        <tr> 
+                        <tr>
                             {this.state.userArticles.map(function(article, i){
                                 return (
                                     <div key={i}>
@@ -145,10 +157,10 @@ class User extends Component {
                                     </div>
                                 )
                             })}
-                        </tr> 
+                        </tr>
                     </tbody>
                 </table>
-                
+
                 <hr></hr>
 
                 <Form noValidate validated={validatedInfo} onSubmit={e => this.handlePasswordChange(e)}>
@@ -157,11 +169,11 @@ class User extends Component {
                             <Form.Label>Change Your Password</Form.Label>
                             <Form.Control className="password" type="text" placeholder="User ID" />
                         </Form.Group>
-                        
+
                         <Form.Group controlId="formNewPassword">
                             <Form.Control type="password" placeholder="New Password" />
                         </Form.Group>
-                        
+
                         <Button variant="primary" type="submit">
                             Update Password
                         </Button>
