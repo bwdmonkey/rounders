@@ -5,35 +5,39 @@ class HomePage extends Component {
         super(props)
         this.state = { 
             leaderboard: [
-                { username: 'Harry',
+                { username: 'Aarry',
                   total_claps: 65,
                   num_articles: 2
                 },
-                { username: 'Ron',
+                { username: 'Lon',
                   total_claps: 15,
                   num_articles: 1
                 },
-                { username: 'Albus',
+                { username: 'Alus',
                   total_claps: 12,
                   num_articles: 1
                 },
-                { username: 'Hermoine',
+                { username: 'Herine',
                   total_claps: 5,
                   num_articles: 1
                 }
             ],
             popularArticles: [
-                { "ID": "1", 
-                  "UserName": "SmoothieX", 
-                  "Written_At": "2999-01-08 04:05:06", 
-                  "Title": "Dinner In Vanvoucer", 
-                  "Content": "Today I ate dinner at McDonalds"
+                { "ID": "1",
+                  "title": "Dinner In Vanvoucer", 
+                  "content": "Today I ate dinner at McDonalds",
+                  "created_at": "2019-06-19T15:22:23.931Z",
+                  "username":"hary",
+                  "first_name":"Hry",
+                  "last_name":"Poer"
                 }, 
                 { "ID": "2", 
-                  "UserName": "Smoothief", 
-                  "Written_At": "2999-01-08 04:05:06", 
-                  "Title": "Dinner In LA", 
-                  "Content": "Second dinner at McDonalds"
+                  "title": "Dinner In LA", 
+                  "content": "Second dinner at McDonalds",
+                  "created_at": "2019-06-19T15:22:23.931Z",
+                  "username":"hary2",
+                  "first_name":"Hry2",
+                  "last_name":"Poer2"
                 }
             ]
         }
@@ -86,9 +90,9 @@ class HomePage extends Component {
                         return (
                         <p key={i}>
                             <hr></hr>
-                            <h3>{data.Title}</h3>
-                            <h4>By {data.UserName} -- {data.Written_At}</h4>
-                            <h5>{data.Content}</h5>
+                            <h3>{data.title}</h3>
+                            <h4>By {data.username} -- {data.created_at}</h4>
+                            <h5>{data.content}</h5>
                         </p>
                         )
                     })}
@@ -100,3 +104,4 @@ class HomePage extends Component {
 }
 
 export default HomePage;
+

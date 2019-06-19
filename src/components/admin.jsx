@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Row from 'react-bootstrap/Row';
 
 class Admin extends Component {
   constructor(props) {
@@ -6,59 +7,128 @@ class Admin extends Component {
 
     this.state = {
       data: {
-        newUsersLastWeek: 0,
-        newArticlesLastWeek: 0,
-        newClapsLastWeek: 0,
-        avgClapsPerUser: 0,
-        avgClapsPerArticle: 0,
-        avgArticlesPerUser: 0,
-        banks: ['cibc', 'bmo', 'td', 'vancity']
+        new_users_last_week: 0,
+        new_articles_last_week: 0,
+        new_claps_last_week: 0,
+        avg_claps_per_user: 0,
+        avg_claps_per_article: 0,
+        avg_articles_per_user: 0,
+        banks: ['cibc', 'bmo', 'td']
       },
+      nameCheck: true,
+      codeCheck: true
     };
   }
 
-  toCapitalCase = str => str.charAt(0).toUpperCase() + str.slice(1)
+  componentDidMount() {
+    // GET /analytics response format
+    // {
+    //   new_users_last_week: 1,
+    //   new_articles_last_week: 1,
+    //   new_claps_last_week: 1,
+    //   avg_claps_per_user: 1,
+    //   avg_claps_per_article: 1,
+    //   avg_articles_per_user: 1,
+    // }
+    fetch('/analytics')
+      .then(res => res.json())
+      .then(data => this.setState(prev => ({
+        data: {
+          ...data.result,         // Set new analytics data
+          banks: prev.data.banks  // Maintain old bank data
+        }
+      })))
+      .catch(_ => {});
 
-  mapTagToIconClass = tag => ({
-    all: 'fa fa-cubes thin-icon',
-    finance: 'fa fa-credit-card thin-icon',
-    economics: 'fa fa-handshake-o thin-icon',
-    life: 'fa fa-heart-o',
-    tech: 'fa fa-laptop',
-    funding: 'icon-line-chart',
-  }[tag])
-
-  generateCards = (noArticlesObj) => {
-    const components = [];
-    Object.keys(noArticlesObj).forEach((key) => {
-      components.push(this.generateCard(key, noArticlesObj[key]));
-    });
-    const cards = [];
-    for (let i = 0; i < components.length; i += 3) {
-      const row = [];
-      for (let j = 0; j < 3; j += 1) {
-        if (components[i + j]) row.push(components[i + j]);
-      }
-      cards.push(<div className="row d-flex">{row}</div>);
-      cards.push(<br />);
-    }
-    return cards;
+    // GET /institutions response format
+    // ['cibc', 'bmo', 'td']
+    fetch('/institutions')
+      .then(res => res.json())
+      .then(data => this.setState(prev => ({
+        data: {
+          ...prev.data,           // Maintain old analytics data
+          banks: data.result      // Set new bank data
+        }
+      })))
+      .catch(_ => {});
   }
 
-  generateCard = (tag, num) => (
-    <div className="col-md-4" key="tag">
-      <div className="card income text-center">
-        <div className="icon"><i className={this.mapTagToIconClass(tag)} /></div>
-        <div className="number">{num}</div>
-        <strong className="text-primary">{this.toCapitalCase(tag)}</strong>
-      </div>
-    </div>
-  )
+  generateBankCards = (banks) => {
+    const bankCards = [];
+    banks.forEach((bank, i) => {
+      let cardContent = [];
+      if (bank.bank_code !== undefined) {
+        cardContent.push(
+          <h6 className="text-primary"
+              key={"bankcode" + i}>{bank.bank_code}</h6>
+        )
+      }
+      if (bank.name !== undefined) {
+        cardContent.push(
+          <h3 className="text-primary"
+              key={"bank"+i}>{bank.name.toUpperCase()}</h3>
+          )
+      }
 
+      bankCards.push(
+        <div className="col-md-4" key={bank + i}>
+          <div className="card income text-center">
+            {cardContent}
+          </div>
+        </div>
+      )
+    });
+    const section = [];
+    for (let i = 0; i < bankCards.length; i += 3) {
+      const row = [];
+      for (let j = 0; j < 3; j += 1) {
+        if (bankCards[i + j]) row.push(bankCards[i + j]);
+      }
+      section.push(<Row key={"bankrow" + i}>{row}</Row>);
+    }
+    return section;
+  }
+
+  handleBankOptions = (event) => {
+    if (event.target.id === "codeCheck") {
+      this.setState(
+        { codeCheck: event.target.checked },
+        () => this.updateBanks()
+      )
+    }
+    if (event.target.id === "nameCheck") {
+      this.setState(
+        { nameCheck: event.target.checked },
+        () => this.updateBanks()
+      )
+    }
+  }
+
+  updateBanks = () => {
+    const { nameCheck, codeCheck } = this.state;
+
+    let query = '';
+    if (nameCheck && codeCheck) {
+      query = '?include=bank_code&include=name';
+    } else if (nameCheck) {
+      query = '?include=name'
+    } else if (codeCheck) {
+      query = '?include=bank_code'
+    }
+
+    fetch('/institutions'+query)
+      .then(res => res.json())
+      .then(data => this.setState(prev => ({
+        data: {
+          ...prev.data,           // Maintain old analytics data
+          banks: data.result      // Set new bank data
+        }
+      })))
+      .catch(_ => {});
+  }
 
   render() {
-    const { response } = this.state;
-    const { body } = response;
+    const { data } = this.state;
 
     return (
       <div className="admin">
@@ -76,7 +146,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New User</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{body.newUsersLastWeek}</div>
+                    <div className="count-number">{data.new_users_last_week}</div>
                   </div>
                 </div>
               </div>
@@ -86,7 +156,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New Articles</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{body.newArticlesLastWeek}</div>
+                    <div className="count-number">{data.new_articles_last_week}</div>
                   </div>
                 </div>
               </div>
@@ -96,7 +166,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">New Claps</strong>
                     <span>Last 7 days</span>
-                    <div className="count-number">{body.newClapsLastWeek}</div>
+                    <div className="count-number">{data.new_claps_last_week}</div>
                   </div>
                 </div>
               </div>
@@ -108,7 +178,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">Avg Claps / User</strong>
                     <span>Last 1 Month</span>
-                    <div className="count-number">{body.avgClapsPerUser}</div>
+                    <div className="count-number">{data.avg_claps_per_user}</div>
                   </div>
                 </div>
               </div>
@@ -118,7 +188,7 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">Avg Claps / Article</strong>
                     <span>Last 1 Month</span>
-                    <div className="count-number">{body.avgClapsPerArticle}</div>
+                    <div className="count-number">{data.avg_claps_per_article}</div>
                   </div>
                 </div>
               </div>
@@ -128,19 +198,23 @@ class Admin extends Component {
                   <div className="name">
                     <strong className="text-uppercase">Avg Articles / User</strong>
                     <span>Last 1 Month</span>
-                    <div className="count-number">{body.avgArticlesPerUser}</div>
+                    <div className="count-number">{data.avg_articles_per_user}</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        {/* Statistics Section */}
-        <h1>Total Number of Articles</h1>
-        <section className="statistics">
-          <div className="container-fluid">
-            {this.generateCards(body.noArticles)}
+        {/* Registered Bank Names */}
+        <section>
+          <h1>Registered Banks</h1>
+          <div>
+            <input id="nameCheck" type="checkbox" onChange={this.handleBankOptions.bind(this)} defaultChecked/> Institute Name<br/>
+            <input id="codeCheck" type="checkbox" onChange={this.handleBankOptions.bind(this)} defaultChecked/> Bank Code<br/>
+            <small>Note: Selecting nothing will also return both fields.</small>
           </div>
+          <br/>
+          {this.generateBankCards(data.banks)}
         </section>
       </div>
     );
