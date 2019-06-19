@@ -12,14 +12,14 @@ class TagSelector extends Component {
         this.validTags = [];
         this.tagIDs= {};
         
-        // fetch('/tags')
-        //     .then(res => res.json())
-        //     .then(handleTagData)
-        //     .catch(err => console.log("something bad happened", err));
-        let fakeTagData = [ {"id": 1, "label": "bananas"}, 
-                {"id": 2, "label": "apples"},
-                {"id": 3, "label": "mouse"}];
-        this.handleTagData(fakeTagData);
+        fetch('/tags')
+            .then(res => res.json())
+            .then(json => this.handleTagData(json.result))
+            .catch(err => console.log("something bad happened", err));
+        // let fakeTagData = [ {"id": 1, "label": "bananas"}, 
+        //         {"id": 2, "label": "apples"},
+        //         {"id": 3, "label": "mouse"}];
+        // this.handleTagData(fakeTagData);
     }
 
     handleTagData = (tagData) => {
