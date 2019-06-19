@@ -173,7 +173,7 @@ class Analytics extends Component {
         {/* Registered Bank Names */}
         <section>
           <h1>Registered Banks</h1>
-          <div>
+          <div className="bankCheckBox">
             <input id="nameCheck" type="checkbox" onChange={this.handleBankOptions.bind(this)} defaultChecked/> Institute Name<br/>
             <input id="codeCheck" type="checkbox" onChange={this.handleBankOptions.bind(this)} defaultChecked/> Bank Code<br/>
             <small>Note: Selecting nothing will also return both fields.</small>
