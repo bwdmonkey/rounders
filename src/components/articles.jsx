@@ -2,16 +2,10 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function getJson() {
-    // JSON PARSER
-    return [{ "ID": "1", "username": "SmoothieX", "created_at": "2999-01-08 04:05:06", "title": "Dinner", "Content": "Today I ate dinner at McDonalds"}, 
-            { "ID": "2", "username": "Smoothief", "created_at": "2999-01-08 04:05:06", "title": "Dinner Again", "Content": "Second dinner at McDonalds"}];
-  }
-
 class Articles extends Component {
     constructor(props) {
         super(props)
-        this.state = { json: [], }
+        this.state = { json: [] }
     }
 
     searchTitle = (event) => {
@@ -25,7 +19,7 @@ class Articles extends Component {
     }
 
     componentDidMount = () => {
-        fetch('/articles?title=')
+        fetch('/articles')
             .then(res => res.json())
             .then(json => {this.setState({ json: json.result })})
             .catch(console.log);
@@ -35,7 +29,7 @@ class Articles extends Component {
         return (
             <div className="articles">
                 <h1>Articles</h1>
-                
+
                 <div id="articleFilter">
                     <Form onSubmit={this.searchTitle}>
                         <Form.Group controlId="formArticleFilter">
@@ -64,4 +58,3 @@ class Articles extends Component {
 }
 
 export default Articles;
-
