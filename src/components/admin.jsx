@@ -51,8 +51,6 @@ class Admin extends Component {
       .catch(_ => {});
   }
 
-  toCapitalCase = str => str.toUpperCase()
-
   generateBankCards = (banks) => {
     const bankCards = [];
     banks.forEach(bank => {
