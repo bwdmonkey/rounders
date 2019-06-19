@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Row from 'react-bootstrap/Row';
 
 class Admin extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Admin extends Component {
         avgClapsPerUser: 0,
         avgClapsPerArticle: 0,
         avgArticlesPerUser: 0,
+        banks: []
       },
     };
   }
@@ -28,8 +30,49 @@ class Admin extends Component {
     // }
     fetch('/analytics')
       .then(res => res.json())
-      .then(data => this.setState({ data: data }))
+      .then(data => this.setState(prev => ({
+        data: {
+          ...data,                // Set new analytics data
+          banks: prev.data.banks  // Maintain old bank data
+        }
+      })))
       .catch(_ => {});
+
+    // GET /institutions response format
+    // ['cibc', 'bmo', 'td']
+    fetch('/institutions')
+      .then(res => res.json())
+      .then(data => this.setState(prev => ({
+        data: {
+          ...prev.data,           // Maintain old analytics data
+          banks: data             // Set new bank data
+        }
+      })))
+      .catch(_ => {});
+  }
+
+  toCapitalCase = str => str.toUpperCase()
+
+  generateBankCards = (banks) => {
+    const bankCards = [];
+    banks.forEach(bank => {
+      bankCards.push(
+        <div className="col-md-4" key={bank}>
+          <div className="card income text-center">
+            <h3 className="text-primary">{bank.toUpperCase()}</h3>
+          </div>
+        </div>
+      )
+    });
+    const section = [];
+    for (let i = 0; i < bankCards.length; i += 3) {
+      const row = [];
+      for (let j = 0; j < 3; j += 1) {
+        if (bankCards[i + j]) row.push(bankCards[i + j]);
+      }
+      section.push(<Row key={"bankrow" + i}>{row}</Row>);
+    }
+    return section;
   }
 
   render() {
@@ -109,6 +152,11 @@ class Admin extends Component {
               </div>
             </div>
           </div>
+        </section>
+        {/* Registered Bank Names */}
+        <section>
+          <h1>Registered Banks</h1>
+          {this.generateBankCards(data.banks)}
         </section>
       </div>
     );
