@@ -85,7 +85,7 @@ class HomePage extends Component {
                 </div>
 
                 <div className="articles" id="pArticles">
-                    <h1>Popular Articles</h1>
+                    <h1>Top Article</h1>
                     {this.state.popularArticles.map((data, i) => {
                         return (
                         <p key={i}>
