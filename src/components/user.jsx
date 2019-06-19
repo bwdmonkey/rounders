@@ -16,7 +16,7 @@ class User extends Component {
             },
             userArticles: [
                 { ID: 10,
-                  Title: 'Dinner'
+                  Title: 'black sill are large'
                 },
                 { ID: 21,
                   Title: 'Brunch',
