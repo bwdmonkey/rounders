@@ -98,7 +98,7 @@ class User extends Component {
 
     render() {
         const { userInfo } = this.state;
-        const { userArticles } = this.state;
+        // const { userArticles } = this.state;
         const { validatedInfo } = this.state;
         const { validatedArticle } = this.state;
 
@@ -135,7 +135,6 @@ class User extends Component {
                     <tbody>
                         <tr>
                             <th>Your Articles: (Article ID and Article Title)</th>
-                            {/* <th>Article Title</th> */}
                         </tr>
                         <tr> 
                             {this.state.userArticles.map(function(article, i){

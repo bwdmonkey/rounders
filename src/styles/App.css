@@ -171,6 +171,13 @@ a {
 }
 
 #pArticles {
+  margin-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  background-color: rgb(252, 249, 244);
+}
+
+#leaderBoard {
   padding-left: 50px;
   padding-right: 50px;
   background-color: rgb(252, 244, 246);

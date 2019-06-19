@@ -1,24 +1,56 @@
 import React, { Component } from 'react';
 
-// function getJson() {
-//     // JSON PARSER
-//     return [{ "ID": "1", "UserName": "SmoothieX", "Written_At": "2999-01-08 04:05:06", "Title": "Dinner In Vanvoucer", "Content": "Today I ate dinner at McDonalds"}, 
-//             { "ID": "2", "UserName": "Smoothief", "Written_At": "2999-01-08 04:05:06", "Title": "Dinner In LA", "Content": "Second dinner at McDonalds"}];
-//   }
-
 class HomePage extends Component {
-    // constructor(props) {
-    //     super(props)
-    //     this.state = { json: [] }
-    // }
+    constructor(props) {
+        super(props)
+        this.state = { 
+            leaderboard: [
+                { username: 'Harry',
+                  total_claps: 65,
+                  num_articles: 2
+                },
+                { username: 'Ron',
+                  total_claps: 15,
+                  num_articles: 1
+                },
+                { username: 'Albus',
+                  total_claps: 12,
+                  num_articles: 1
+                },
+                { username: 'Hermoine',
+                  total_claps: 5,
+                  num_articles: 1
+                }
+            ],
+            popularArticles: [
+                { "ID": "1", 
+                  "UserName": "SmoothieX", 
+                  "Written_At": "2999-01-08 04:05:06", 
+                  "Title": "Dinner In Vanvoucer", 
+                  "Content": "Today I ate dinner at McDonalds"
+                }, 
+                { "ID": "2", 
+                  "UserName": "Smoothief", 
+                  "Written_At": "2999-01-08 04:05:06", 
+                  "Title": "Dinner In LA", 
+                  "Content": "Second dinner at McDonalds"
+                }
+            ]
+        }
+    }
 
-    // componentDidMount() {
-    //     this.setState((prevState) => {
-    //         return {
-    //             json: getJson()
-    //         }
-    //     })
-    // }
+    componentDidMount() {
+        fetch('/leaderboard')
+            .then(res => res.json())
+            .then(leaderboard => 
+                this.setState({leaderboard: leaderboard.result }))
+            .catch(_ => {});
+
+        fetch('/articles')
+            .then(res => res.json())
+            .then(popularArticles => this.setState({popularArticles: popularArticles.result}))
+            .catch(_ => {});
+    }
 
     render() {
         return (
@@ -35,9 +67,22 @@ class HomePage extends Component {
                     >><a href="register">Register</a>
                 </div>
 
-                {/* <div className="articles" id="pArticles">
+                <div className="articles" id="leaderBoard">
+                    <h1>Leader Board</h1>
+                    {this.state.leaderboard.map((data, i) => {
+                        return (
+                        <p key={i}>
+                            <hr></hr>
+                            <h3>{data.username}</h3>
+                            <h4>-- {data.total_claps} claps received, wrote {data.num_articles} article(s) this week</h4>
+                        </p>
+                        )
+                    })}
+                </div>
+
+                <div className="articles" id="pArticles">
                     <h1>Popular Articles</h1>
-                    {this.state.json.map((data, i) => {
+                    {this.state.popularArticles.map((data, i) => {
                         return (
                         <p key={i}>
                             <hr></hr>
@@ -47,7 +92,8 @@ class HomePage extends Component {
                         </p>
                         )
                     })}
-                </div> */}
+                </div>
+
             </div>
         );
     }
