@@ -41,7 +41,6 @@ class Articles extends Component {
                     return (
                     <p key={i}>
                         <hr></hr>
-                        {/* <td>{data.ID}</td> */}
                         <h3>{data.Title}</h3>
                         <h4>By {data.Username} -- {data.Written_At}</h4>
                         <h5>{data.Content}</h5>

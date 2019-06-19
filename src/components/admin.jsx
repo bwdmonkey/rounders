@@ -5,24 +5,14 @@ class Admin extends Component {
     super(props);
 
     this.state = {
-      response: {
-        // [...]
-        body: {
-          newUsersLastWeek: 1,
-          newArticlesLastWeek: 1,
-          newClapsLastWeek: 666,
-          avgClapsPerUser: 34,
-          avgClapsPerArticle: 4.2,
-          avgArticlesPerUser: 0.2,
-          noArticles: {
-            all: 16.5,
-            finance: 1.1,
-            economics: 2.2,
-            life: 3.3,
-            tech: 4.4,
-            funding: 5.5,
-          },
-        },
+      data: {
+        newUsersLastWeek: 0,
+        newArticlesLastWeek: 0,
+        newClapsLastWeek: 0,
+        avgClapsPerUser: 0,
+        avgClapsPerArticle: 0,
+        avgArticlesPerUser: 0,
+        banks: ['cibc', 'bmo', 'td', 'vancity']
       },
     };
   }
