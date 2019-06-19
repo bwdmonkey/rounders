@@ -262,7 +262,8 @@ table.userArticles {
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 120px;
-  padding-right: 200px;
+  padding-right: 120px;
+  font-family: 'Palatino', serif;
   text-align: left;
 }
 
@@ -271,7 +272,7 @@ table.userArticles {
   padding-bottom: 15px;
   padding-left: 100px;
   padding-right: 50px;
-  text-align: left;
+  text-align: center;
 }
 
 .userArticles tr:nth-child(odd) {
