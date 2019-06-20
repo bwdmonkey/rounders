@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function getJson() {
-    // JSON PARSER
-    return [{ "ID": "1", "Username": "SmoothieX", "Written_At": "2999-01-08 04:05:06", "Title": "Dinner", "Content": "Today I ate dinner at McDonalds"}, 
-            { "ID": "2", "Username": "Smoothief", "Written_At": "2999-01-08 04:05:06", "Title": "Dinner Again", "Content": "Second dinner at McDonalds"}];
-  }
+// function getJson() {
+//     // JSON PARSER
+//     return [{ "ID": "1", "Username": "SmoothieX", "Written_At": "2999-01-08 04:05:06", "Title": "Dinner", "Content": "Today I ate dinner at McDonalds"}, 
+//             { "ID": "2", "Username": "Smoothief", "Written_At": "2999-01-08 04:05:06", "Title": "Dinner Again", "Content": "Second dinner at McDonalds"}];
+//   }
 
 class Articles extends Component {
     constructor(props) {
