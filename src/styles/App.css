@@ -293,7 +293,29 @@ table.userArticles {
   border-color: rgb(247, 224, 230);
 }
 
+#articleClaps {
+  padding-bottom: 30px;
+}
+
+#articleClaps button{
+  background-color: rgb(247, 224, 230);
+  color: rgb(54, 47, 50);
+  border-color: rgb(247, 224, 230);
+}
+
 #submitButton button{
+  background-color: rgb(247, 224, 230);
+  color: rgb(54, 47, 50);
+  border-color: rgb(247, 224, 230);
+}
+
+#claps button{
+  background-color: rgb(247, 224, 230);
+  color: rgb(54, 47, 50);
+  border-color: rgb(247, 224, 230);
+}
+
+#claps button{
   background-color: rgb(247, 224, 230);
   color: rgb(54, 47, 50);
   border-color: rgb(247, 224, 230);
