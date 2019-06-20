@@ -48,6 +48,7 @@ class Articles extends Component {
         const { user_id } = this.state;
         const { articleBeingClapped } = this.state;
         const { tmpClaps } = this.state;
+
         if (user_id === null) return 0;
         if (article.id === articleBeingClapped) {
             return tmpClaps;
@@ -55,7 +56,7 @@ class Articles extends Component {
         let reactions = article.reactions;
         if (reactions.length > 0) {
             for (let i = 0; i < reactions.length; i++) {
-                if (reactions[i].user_id !== undefined && reactions[i].user_id == user_id) {
+                if (reactions[i].user_id !== undefined && reactions[i].user_id === parseInt(user_id, 10)) {
                     return reactions[i].count
                 }
             }
@@ -69,7 +70,7 @@ class Articles extends Component {
         let reactions = article.reactions;
         if (reactions.length > 0) {
             for (let i = 0; i < reactions.length; i++) {
-                if (reactions[i].user_id !== undefined && reactions[i].user_id == user_id) {
+                if (reactions[i].user_id !== undefined && reactions[i].user_id === parseInt(user_id, 10)) {
                     return true
                 }
             }
