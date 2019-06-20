@@ -11,15 +11,88 @@ function getJson() {
 class Articles extends Component {
     constructor(props) {
         super(props)
-        this.state = { json: [] }
+        this.state = { 
+            json: [ //can be renamed: articleInfo?
+            { 
+                "article_id": 1, 
+                "username": "SmoothieX", 
+                "created_At": "2999-01-08 04:05:06", 
+                "title": "Dinner", 
+                "content": "Today I ate dinner at McDonalds",
+                "clapNumber": 12 // after merging
+            }, 
+            { 
+                "article_id": 2, 
+                "username":"Smoothief", 
+                "created_at":"2999-01-08 04:05:06", 
+                "title": "Dinner Again", 
+                "content": "Second dinner at McDonalds",
+                "clapNumber": 35 // after merging
+            }],
+            claps: [
+            { 
+                "article_id": 1, 
+                "clapNumber": 12
+            }, 
+            { 
+                "article_id": 2, 
+                "clapNumber": 35
+            }], // mock data
+        }
     }
 
-    componentDidMount() {
-        this.setState((prevState) => {
-            return {
-                json: getJson()
-            }
-        })
+    searchTitle = (event) => {
+        const form = event.currentTarget;
+        event.preventDefault();
+
+        fetch('/articles?title=' + encodeURIComponent(form.elements.formArticleFilter.value))
+            .then(res => res.json())
+            .then(json => {this.setState({ json: json.result })})
+            .catch(console.log);
+    }
+
+    handleClaps = (event) => {
+        const form = event.currentTarget;
+        event.preventDefault();
+
+        let article_id = 1 // need to fill in
+
+        // clap +1 and refresh window
+        fetch('/articles/' + article_id + '/reactions', {
+            method: '...', // need to fill in
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then(
+            window.location.reload()
+        ).catch(err => console.log("err", err));
+    }
+
+    componentDidMount = () => {
+        fetch('/articles')
+            .then(res => res.json())
+            .then(json => {this.setState({ json: json.result })})
+            .catch(console.log);
+
+        let article_id = 1 // need to fill in
+
+        fetch('/articles/' + article_id + '/reactions')
+            .then(res => res.json())
+            .then(claps => {this.setState({ claps: claps.result })})
+            .catch(console.log);
+        
+        // merge two sets of data
+        // let json = json;
+        // let claps = claps;
+        // let merged = [];
+          
+        // for(let i = 0; i < json.length; i++) {
+        //     merged.push({
+        //     ...json[i], 
+        //     ...(claps.find((item) => item.article_id === json[i].id))});
+        // }
+        // console.log(merged);
+            
     }
 
     render() {
@@ -39,12 +112,17 @@ class Articles extends Component {
 
                 {this.state.json.map((data, i) => {
                     return (
-                    <p key={i}>
+                    <div key={i} id="claps">
                         <hr></hr>
-                        <h3>{data.Title}</h3>
-                        <h4>By {data.Username} -- {data.Written_At}</h4>
-                        <h5>{data.Content}</h5>
-                    </p>
+                        <h3>{data.title}</h3>
+                        <h4>By {data.username} -- {data.created_at}</h4>
+                        <h5>{data.content}</h5>
+
+                        <h4>Number of Claps For This Article: {data.clapNumber}</h4>
+                        <Button variant="primary" type="submit">
+                            Clap
+                        </Button>
+                    </div>
                     )
                 })}
             </div>
