@@ -6,31 +6,31 @@ class Articles extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            json: [ //can be renamed: articleInfo?
+            articles: [
             {
-                "article_id": 1,
-                "username": "SmoothieX",
-                "created_At": "2999-01-08 04:05:06",
-                "title": "Dinner",
-                "content": "Today I ate dinner at McDonalds",
-                "clapNumber": 12 // after merging
+                article_id: 1,
+                username: "SmoothieX",
+                created_At: "2999-01-08 04:05:06",
+                title: "Dinner",
+                content: "Today I ate dinner at McDonalds",
+                clapNumber: 12
             },
             {
-                "article_id": 2,
-                "username":"Smoothief",
-                "created_at":"2999-01-08 04:05:06",
-                "title": "Dinner Again",
-                "content": "Second dinner at McDonalds",
-                "clapNumber": 35 // after merging
+                article_id: 2,
+                username:"Smoothief",
+                created_at:"2999-01-08 04:05:06",
+                title: "Dinner Again",
+                content: "Second dinner at McDonalds",
+                claps: 35
             }],
             claps: [
             {
-                "article_id": 1,
-                "clapNumber": 12
+                article_id: 1,
+                amount: 12
             },
             {
-                "article_id": 2,
-                "clapNumber": 35
+                article_id: 2,
+                amount: 35
             }], // mock data
         }
     }
@@ -41,7 +41,7 @@ class Articles extends Component {
 
         fetch('/articles?title=' + encodeURIComponent(form.elements.formArticleFilter.value))
             .then(res => res.json())
-            .then(json => {this.setState({ json: json.result })})
+            .then(json => {this.setState({ articles: json.result })})
             .catch(console.log);
     }
 
@@ -70,7 +70,7 @@ class Articles extends Component {
     componentDidMount = () => {
         fetch('/articles')
             .then(res => res.json())
-            .then(json => {this.setState({ json: json.result })})
+            .then(json => {this.setState({ articles: json.result })})
             .catch(console.log);
 
         let article_id = 1 // need to fill in
@@ -94,6 +94,8 @@ class Articles extends Component {
     }
 
     render() {
+        const { articles } = this.state;
+
         return (
             <div className="articles">
                 <h1>Articles</h1>
@@ -111,7 +113,7 @@ class Articles extends Component {
                 </div>
 
             {/* TODO: if state.articles is empty, then display "sorry no articles found"*/}
-                {this.state.json.map((data, i) => {
+                {articles.map((data, i) => {
                     return (
                     <div key={i} id="claps">
                         <hr></hr>
