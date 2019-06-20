@@ -1,43 +1,39 @@
 import React, { Component } from 'react';
+import  { Redirect } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 class User extends Component {
     constructor(props) {
         super(props)
-
-        this.state = { 
-            userInfo: {
-                ID: 1, 
-                Username: 'Smoothief', 
-                last_name: 'Smith', 
-                first_name: 'Divia', 
-                Email: 'diviasm@outlook.com',
-            },
-            userArticles: [
-                { ID: 10,
-                  Title: 'black sill are large'
-                },
-                { ID: 21,
-                  Title: 'Brunch',
-                },
-                { ID: 33,
-                  Title: 'Halo',
-                }
-            ],
+        let doRedirect = false;
+        if (localStorage.getItem('user_id') == null) {
+            doRedirect = true;
+        }
+        this.state = {
+            json: [],
+            user_id: localStorage.getItem('user_id'),
+            user: {},
+            userArticles: [],
+            redirect: doRedirect,
             validatedInfo: false,
             validatedArticle: false,
-        };
+        }
     }
 
     componentDidMount() {
-        fetch('/users')
+        const { user_id } = this.state;
+        fetch('/users/' + user_id)
             .then(res => res.json())
-            .then(userInfo => 
-                this.setState({userInfo: userInfo.result }))
+            .then(data => {
+                if (data.result.length !== 1) {
+                    return this.setState({ redirect: true })
+                }
+                this.setState({user: data.result[0] })
+            })
             .catch(_ => {});
 
-        fetch('/articles')
+        fetch('/users/' + user_id + '/articles')
             .then(res => res.json())
             .then(userArticles => this.setState({userArticles: userArticles.result}))
             .catch(_ => {});
@@ -52,12 +48,13 @@ class User extends Component {
         }
         this.setState({ validatedInfo: true });
 
+        const { user_id } = this.state;
+
         let data = {
-            username: form.elements.formUserID.value,
-            firstName: form.elements.formNewPassword.value,
+            password: form.elements.formNewPassword.value,
         }
 
-        fetch('/users', {
+        fetch('/users/' + user_id, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -76,31 +73,25 @@ class User extends Component {
         }
         this.setState({ validatedArticle: true });
 
-        let data = {
-            article_id: form.elements.formDeleteArticleID.value,
-        }
+        let article_id = form.elements.formDeleteArticleID.value
 
-        fetch('/articles', {
+        fetch('/articles/' + article_id, {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data),
-        })
-        .then( // fetch articles again after deletion
-            fetch('/articles')
-            .then(res => res.json())
-            .then(userArticles => this.setState({userArticles: userArticles.result}))
-            .catch(_ => {})
-        )
-        .catch(err => console.log("err", err));
+        }).then(
+            window.location.reload()
+        ).catch(err => console.log("err", err));
     }
 
     render() {
-        const { userInfo } = this.state;
-        // const { userArticles } = this.state;
+        const { user } = this.state;
+        const { userArticles } = this.state;
         const { validatedInfo } = this.state;
         const { validatedArticle } = this.state;
+        const { redirect } = this.state;
+
+        if (redirect) {
+            return <Redirect to='/login' />;
+        }
 
         return (
             <div className="user">
@@ -110,23 +101,23 @@ class User extends Component {
                     <tbody>
                             <tr>
                                 <th>User ID:</th>
-                                <td>{userInfo.ID}</td>
+                                <td>{user.id}</td>
                             </tr>
                             <tr>
                                 <th>Username:</th>
-                                <td>{userInfo.Username}</td>
+                                <td>{user.username}</td>
                             </tr>
                             <tr>
                                 <th>Last Name:</th>
-                                <td>{userInfo.last_name}</td>
+                                <td>{user.last_name}</td>
                             </tr>
                             <tr>
                                 <th>First Name:</th>
-                                <td>{userInfo.first_name}</td>
+                                <td>{user.first_name}</td>
                             </tr>
                             <tr>
                                 <th>Email:</th>
-                                <td>{userInfo.Email}</td>
+                                <td>{user.email}</td>
                             </tr>
                     </tbody>
                 </table>
@@ -134,34 +125,28 @@ class User extends Component {
                 <table className="userArticles">
                     <tbody>
                         <tr>
-                            <th>Your Articles: (Article ID and Article Title)</th>
+                            <th colSpan={2}>Your Articles: (Article ID and Article Title)</th>
                         </tr>
-                        <tr> 
-                            {this.state.userArticles.map(function(article, i){
-                                return (
-                                    <div key={i}>
-                                        <td>{article.ID}</td>
-                                        <td>{article.Title}</td>
-                                    </div>
-                                )
-                            })}
-                        </tr> 
+                        {userArticles.map(function(article, i){
+                            return (
+                                <tr key={i}>
+                                    <td>{article.id}</td>
+                                    <td>{article.title}</td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
-                
+
                 <hr></hr>
 
                 <Form noValidate validated={validatedInfo} onSubmit={e => this.handlePasswordChange(e)}>
                     <div id="changePassword">
-                        <Form.Group controlId="formUserID">
-                            <Form.Label>Change Your Password</Form.Label>
-                            <Form.Control className="password" type="text" placeholder="User ID" />
-                        </Form.Group>
-                        
                         <Form.Group controlId="formNewPassword">
+                            <Form.Label>Change Your Password</Form.Label>
                             <Form.Control type="password" placeholder="New Password" />
                         </Form.Group>
-                        
+
                         <Button variant="primary" type="submit">
                             Update Password
                         </Button>

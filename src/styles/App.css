@@ -320,3 +320,7 @@ table.userArticles {
   color: rgb(54, 47, 50);
   border-color: rgb(247, 224, 230);
 }
+
+.bankCheckBox {
+  padding:30px;
+}
