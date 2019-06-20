@@ -54,18 +54,23 @@ class Articles extends Component {
     handleClaps = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
+        // if (form.checkValidity() === false) {
+        //     event.stopPropagation();
+        // }
+        // this.setState({ validatedInfo: true });
 
-        let article_id = 1 // need to fill in
+        const { article_id } = this.state;
 
-        // clap +1 and refresh window
+        let data = { amount: 14, } // amount + 1
+
         fetch('/articles/' + article_id + '/reactions', {
-            method: '...', // need to fill in
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
-        }).then(
-            window.location.reload()
-        ).catch(err => console.log("err", err));
+            body: JSON.stringify(data),
+        })
+        .catch(err => console.log("err", err));
     }
 
     componentDidMount = () => {
@@ -91,8 +96,7 @@ class Articles extends Component {
         //     ...json[i], 
         //     ...(claps.find((item) => item.article_id === json[i].id))});
         // }
-        // console.log(merged);
-            
+        // console.log(merged); 
     }
 
     render() {
@@ -131,4 +135,3 @@ class Articles extends Component {
 }
 
 export default Articles;
-
